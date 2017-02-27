@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html >
+<head>
+  <meta charset="UTF-8">
+	<link rel="icon" href="./favicon.ico" type="image/x-icon">
+	<link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
+    <meta name="description" content="Participate in various polls.">
+    <meta name="author" content="Everywump Votes Channel">
+    <meta property="og:title" name="Title" content="Everywump Votes Channel"/>
+    <meta property="og:description" name="Description"
+          content="Participate in various polls."/>
+    <meta property="og:image" name="Image" content="http://i.imgur.com/fxDxNu1.png"/>
+    <meta property="og:url" name="URL" content="https://clubwumpus.github.io/everywumpvotes/"/>
+	<title>Everywump Votes Channel</title>
+      <link rel="stylesheet" href="style.css">
+	  
+	  	<script src="alertify/alertify.js"></script>
+	<link rel="stylesheet" href="alertify/css/alertify.css"></script>
+</head>
+
+<script>
+var hover = new Audio("hover.mp3");
+var click = new Audio("click.mp3");
+
+function poll(id) {
+click.play();
+		alertify.alert("<iframe src='https://www.strawpoll.me/embed_1/" + id + "' width='99%' height='99%' scrolling='no'></iframe>").set('resizable',true).resizeTo(734,617);;
+}
+
+function pollOld(id) {
+click.play();
+		alertify.alert("<iframe src='https://www.strawpoll.me/embed_1/" + id + "/r' width='99%' height='99%' scrolling='no'></iframe>").set('resizable',true).resizeTo(734,617);;
+}
+
+function submit() {
+click.play();
+		alertify.alert("<iframe src='https://docs.google.com/forms/d/e/1FAIpQLSfbL4DdvSWHFCOSOJRaBzp_uC9fvxNbERUlBUlDjnJj6zvN5Q/viewform' width='99%' height='99%'></iframe>").set('resizable',true).resizeTo(734,617);;
+}
+
+function back() {
+click.play();
+    window.location.href = 'https://clubwumpus.github.io/wumpmenu/';
+}
+</script>
+
+<body>
+
+<div id="menu" class="menu">
+		<a class="poll" href="#" onclick="poll(12089271);" onmouseover="hover.play();">Thinking or Thonkang?</a>
+		<a class="poll-old" href="#" onclick="pollOld(12030642);" onmouseover="hover.play();">Will you use this channel when it releases?</a>
+		
+	<div id="sendbutton">
+	<a class="sendbutton" id="sendbutton" href="#" onclick="submit();" onmouseover="hover.play();"> </a>
+	</div>
+
+	<a  id="back" class="back" href="#" onclick="back();" onmouseover="hover.play();"> </a>
+</div>
+
+  <video id="bgvid" playsinline autoplay muted loop>
+<source src="bgm.mp4" type="video/mp4">
+</video>
+	<script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+<audio src="bgm.mp3" loop=1 auto autoplay></audio>
+</body>
+</html>

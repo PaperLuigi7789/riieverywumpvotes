@@ -1,65 +1,102 @@
 <!DOCTYPE html>
-<html >
+<html>
 <head>
   <meta charset="UTF-8">
-	<link rel="icon" href="./favicon.ico" type="image/x-icon">
-	<link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
-    <meta name="description" content="Participate in various polls.">
-    <meta name="author" content="Everywump Votes Channel">
-    <meta property="og:title" name="Title" content="Everywump Votes Channel"/>
-    <meta property="og:description" name="Description"
-          content="Participate in various polls."/>
-    <meta property="og:image" name="Image" content="http://i.imgur.com/fxDxNu1.png"/>
-    <meta property="og:url" name="URL" content="https://clubwumpus.github.io/everywumpvotes/"/>
-	<title>Everywump Votes Channel</title>
-      <link rel="stylesheet" href="style.css">
-	  
-	  	<script src="alertify/alertify.js"></script>
-	<link rel="stylesheet" href="alertify/css/alertify.css"></script>
+  <link rel="icon" href="./favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
+  <meta name="description" content="Participate in various polls.">
+  <meta name="author" content="Everywump Votes Channel">
+  <meta property="og:title" name="Title" content="Everywump Votes Channel" />
+  <meta property="og:description" name="Description" content="Participate in various polls." />
+  <meta property="og:image" name="Image" content="http://i.imgur.com/fxDxNu1.png" />
+  <meta property="og:url" name="URL" content="https://clubwumpus.github.io/everywumpvotes/" />
+  <title>Everywump Votes Channel</title>
+  <link rel="stylesheet" href="style.css">
+
+  <script src="alertify/alertify.js"></script>
+  <link rel="stylesheet" href="alertify/css/alertify.css">
 </head>
 
 <script>
-var hover = new Audio("hover.mp3");
-var click = new Audio("click.mp3");
+  var hover = new Audio("hover.mp3");
+  var click = new Audio("click.mp3");
 
-function poll(id) {
-click.play();
-		alertify.alert("<iframe src='https://www.strawpoll.me/embed_1/" + id + "' width='99%' height='99%' scrolling='no'></iframe>").set('resizable',true).resizeTo(734,617);;
-}
+  function loadPollsFromRSS() {
+    // Fetch the RSS feed using AJAX or fetch API
+    fetch('http://127.0.0.1:3000/riieverywumpvotesfeed/pollsfeed.xml')
+      .then(response => response.text())
+      .then(data => {
+        // Parse the RSS feed XML data
+        var parser = new DOMParser();
+        var xmlDoc = parser.parseFromString(data, "text/xml");
 
-function pollOld(id) {
-click.play();
-		alertify.alert("<iframe src='https://www.strawpoll.me/embed_1/" + id + "/r' width='99%' height='99%' scrolling='no'></iframe>").set('resizable',true).resizeTo(734,617);;
-}
+        // Extract poll information from the XML
+        var items = xmlDoc.getElementsByTagName("item");
+        var pollList = document.getElementById("pollList");
 
-function submit() {
-click.play();
-		alertify.alert("<iframe src='https://docs.google.com/forms/d/e/1FAIpQLSfbL4DdvSWHFCOSOJRaBzp_uC9fvxNbERUlBUlDjnJj6zvN5Q/viewform' width='99%' height='99%'></iframe>").set('resizable',true).resizeTo(734,617);;
-}
+        // Generate poll links dynamically
+        for (var i = 0; i < items.length; i++) {
+          var pollTitle = items[i].getElementsByTagName("title")[0].childNodes[0].nodeValue;
+          var pollId = items[i].getElementsByTagName("id")[0].childNodes[0].nodeValue;
+          var pollLink = document.createElement("a");
+		  var alertifypop = items[i].getElementsByTagName("link")[0].childNodes[0].nodeValue;
+          pollLink.className = "poll";
+          pollLink.textContent = pollTitle;
+          pollLink.href = "#";
+          pollLink.setAttribute("onclick", "poll(" + alertifypop + ");");
+          pollLink.setAttribute("onmouseover", "hover.play();");
+          pollList.appendChild(pollLink);
+        }
+      })
+      .catch(error => {
+        console.log("Error fetching RSS feed:", error);
+      });
+  }
 
-function back() {
-click.play();
+  function poll(link) {
+    click.play();
+    alertify.alert("<iframe src='https://" + link + "' width='99%' height='99%' scrolling='no'></iframe>").set('resizable', true).resizeTo(734, 617);
+  }
+
+  function submit() {
+    click.play();
+    alertify.alert("<iframe src='https://docs.google.com/forms/d/e/1FAIpQLSfbL4DdvSWHFCOSOJRaBzp_uC9fvxNbERUlBUlDjnJj6zvN5Q/viewform' width='99%' height='99%'></iframe>").set('resizable', true).resizeTo(734, 617);
+  }
+
+  function back() {
+    click.play();
     window.location.href = 'https://windowsaurora.github.io/riiwumpmenu/#';
-}
+  }
+
+  function showAlertOnLoad() {
+      alertify.alert('<h3 style="color: white;">Rii Wump Votes Channel Has Been Closed Down. There Not Many People Visting This Site So Hosting Poll Is Useless. It Will Be Open When This Site Has Decent Visits</h3">')
+        .setting({
+          closable: false, // Make the alert unlosable
+          onok: function() {
+            window.location.href = 'https://windowsaurora.github.io/riiwumpmenu/'; // Redirect to the specified link
+          }
+        });
+    }
+
+  window.addEventListener('load', showAlertOnLoad);
 </script>
 
-<body>
-
-<div id="menu" class="menu">
-		<a class="poll" href="#" onclick="poll(12089271);" onmouseover="hover.play();">Thinking or Thonkang?</a>
-		<a class="poll-old" href="#" onclick="pollOld(12030642);" onmouseover="hover.play();">Will you use this channel when it releases?</a>
-		
-	<div id="sendbutton">
-	<a class="sendbutton" id="sendbutton" href="#" onclick="submit();" onmouseover="hover.play();"> </a>
-	</div>
-
-	<a  id="back" class="back" href="#" onclick="back();" onmouseover="hover.play();"> </a>
-</div>
+<body onload="loadPollsFromRSS()">
+	<div id="menu" class="menu">
+		<div id="pollList"></div>
+	  
+		<div id="sendbutton">
+		  <a class="sendbutton" id="sendbutton" href="#" onclick="submit();" onmouseover="hover.play();"> </a>
+		</div>
+	  
+		<a id="back" class="back" href="#" onclick="back();" onmouseover="hover.play();"> </a>
+	  </div>
+	  
 
   <video id="bgvid" playsinline autoplay muted loop>
-<source src="bgm.mp4" type="video/mp4">
-</video>
-	<script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
-<audio src="bgm.mp3" loop=1 auto autoplay></audio>
+    <source src="bgm.mp4" type="video/mp4">
+  </video>
+  <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+  <audio src="bgm.mp3" loop=1 auto autoplay></audio>
 </body>
 </html>

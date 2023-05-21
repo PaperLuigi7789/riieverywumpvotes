@@ -77,19 +77,36 @@ a {
 		opacity: 0.5;
 }
 
- #sendbutton {
-	width: 128px;
-	line-height: 89px;
-	display: block;
-	margin: 3px;
-	text-align: center;
-	cursor: url('wii-cursor.png'), default;
-	 position: fixed;
-	 transform: scale(0.9);
-left: 0;
-bottom: 0;
-background-image: url("send.png");
- }
+	#sendbutton {
+		width: 128px;
+		height: 89px; /* Updated line: Set the height to match the image height */
+		display: block;
+		margin: 3px;
+		text-align: center;
+		cursor: url('wii-cursor.png'), default;
+		position: fixed;
+		transform: scale(0.9);
+		left: 0;
+		bottom: 0;
+		background-image: url("send.png");
+		background-size: 100% 100%; /* Updated line: Set the background size to cover the button */
+	  }
+	  
+	  #back {
+		width: 128px;
+		height: 128px; /* Updated line: Set the height to match the image height */
+		display: block;
+		margin: 3px;
+		text-align: center;
+		cursor: url('wii-cursor.png'), default;
+		position: fixed;
+		transform: scale(0.9);
+		right: 0;
+		bottom: 0;
+		background-image: url("back.png");
+		background-size: 100% 100%; /* Updated line: Set the background size to cover the button */
+	  }
+	  
  
  #sendbutton:hover {
     animation-name: hover;
